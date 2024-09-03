@@ -1,5 +1,3 @@
-let totalPrimeNumbers = 0;
-
 const isPrime = (num) => {
   if (num <= 1) return false;
   if (num <= 3) return true;
@@ -12,16 +10,24 @@ const isPrime = (num) => {
   return true; // Is prime
 };
 
-countPrimeNumbers = () => {
-  for (let i = 2; i <= 200; i++) {
+const countPrimeNumbers = () => {
+  let totalPrimeNumbers = 0;
+  for (let i = 2; i <= 100; i++) {
     if (isPrime(i)) {
       totalPrimeNumbers += 1;
     }
   }
-  console.log(totalPrimeNumbers);
+  return totalPrimeNumbers;
 };
 
 function main() {
-  countPrimeNumbers();
+  const start = performance.now(); // Start time
+  const primeCount = countPrimeNumbers();
+  const end = performance.now(); // End time
+  const executionTime = end - start;
+
+  console.log(`Number of prime numbers between 2 and 100: ${primeCount}`);
+  console.log(`Execution time of printing countPrimeNumbers was ${executionTime} milliseconds.`);
 }
+
 main();
