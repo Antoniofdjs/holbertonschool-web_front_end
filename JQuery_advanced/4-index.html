@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Task 0</title>
+
+    <!-- slim & minified version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+  </head>
+
+  <body>
+    <script>
+      function createFamilyTree() {
+        $("<table></table>")
+          .append(
+            $("<thead></thead>").append(
+              $("<tr></tr>").append($("<th></th>").text("First Name")).append($("<th></th>").text("Last Name"))
+            )
+          )
+          .append(
+            $("<tbody></tbody>")
+              .append($("<tr></tr>").append($("<td></td>").text("Guillaume")).append($("<td></td>").text("Salva")))
+              .append($("<tr></tr>").append($("<td></td>").text("Paulette")).append($("<td></td>").text("Salva")))
+              .append($("<tr></tr>").append($("<td></td>").text("Antoine")).append($("<td></td>").text("Salva")))
+          )
+          .appendTo("body");
+      }
+
+      function replaceFamilyTree() {
+        newRow = $("<tr></tr>").append($("<td></td>").text("Gerard")).append($("<td></td>").text("Bonissa"));
+        $("tbody").html(newRow); // replace al content with the new
+      }
+
+      // Main Calls here below:
+      createFamilyTree();
+      replaceFamilyTree();
+    </script>
+  </body>
+</html>
