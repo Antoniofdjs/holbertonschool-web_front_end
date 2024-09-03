@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Task 0</title>
+
+    <!-- slim & minified version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+  </head>
+
+  <body>
+    <script>
+      function createFamilyTree() {
+        let $tableElement = $("<table></table>");
+
+        let $tableHead = $("<thead></thead>");
+        let $headerRow = $("<tr></tr>");
+        let $headFirstName = $("<th></th>").text("First Name");
+        let $headLastName = $("<th></th>").text("Last Name");
+
+        let $tableBody = $("<tbody></tbody>");
+
+        // Prepare header
+        $headerRow.append($headFirstName);
+        $headerRow.append($headLastName);
+        $tableHead.append($headerRow);
+
+        // Define data for rows
+        let rowData = [
+          { firstName: "Guillaume", lastName: "Salva" },
+          { firstName: "Paulette", lastName: "Salva" },
+          { firstName: "Antoine", lastName: "Salva" },
+        ];
+        // Loop for appending data into row
+        rowData.forEach(function (data) {
+          var $row = $("<tr></tr>");
+          var $firstNameCell = $("<td></td>").text(data.firstName);
+          var $lastNameCell = $("<td></td>").text(data.lastName);
+
+          $row.append($firstNameCell);
+          $row.append($lastNameCell);
+
+          $tableBody.append($row);
+        });
+        $tableElement.append($tableHead);
+        $tableElement.append($tableBody);
+        $("body").append($tableElement);
+      }
+      createFamilyTree();
+    </script>
+  </body>
+</html>
