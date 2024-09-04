@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Task 0</title>
+
+    <!-- slim & minified version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.slim.min.js"></script>
+  </head>
+
+  <body>
+    <script>
+      // Functions here below:
+      function createFamilyTree() {
+        $tableElement = $("<table></table>")
+          .append($("<thead></thead>"))
+          .append($("<th></th>").text("FirstName"))
+          .append($("<th></th>").text("LastName"))
+          .append("<tbody></tbody>");
+
+        $("body").append($tableElement);
+      }
+
+      function addNewMember(firstName, lastName, position) {
+        newRow = $("<tr></tr>");
+
+        newRow
+          .append($("<td></td>").text(firstName))
+          .append($("<td></td>").text(lastName))
+          .append(
+            $("<td></td>")
+              .text("(X)")
+              .css("background-color", "orange")
+              .on("click", function () {
+                $(this).closest("tr").remove(); // Remove the row
+              })
+          );
+
+        // check if preappend or append
+        if (position === "before") {
+          newRow.prependTo("tbody");
+        } else {
+          newRow.appendTo("tbody");
+        }
+      }
+
+      function createForm() {
+        let inputNameElement = $('<input type="text" placeholder="First Name"></input>');
+        let inputLastNameElement = $('<input type="text" placeholder="Last Name"></input>');
+        let selectElement = $(`
+            <select id="positionSelect">
+                <option value="before">Before</option>
+                <option value="after">After</option>
+            </select>
+            `);
+
+        let submitElement = $('<input type="submit"></input>');
+        submitElement.on("click", function () {
+          event.preventDefault();
+          const firstName = $("input").first().val(); // requirement use .first
+          const lastName = $("input:nth-of-type(2)").val(); // requiremetn user nth-of-type()
+          const position = selectElement.val();
+
+          addNewMember(firstName, lastName, position);
+        });
+
+        $("table").before(inputNameElement, inputLastNameElement, selectElement, submitElement);
+      }
+
+      // Main Calls here below:
+      createFamilyTree();
+      addNewMember("Ant", "Dejesus");
+      addNewMember("Pedro", "Dejesus");
+      createForm();
+    </script>
+  </body>
+</html>
