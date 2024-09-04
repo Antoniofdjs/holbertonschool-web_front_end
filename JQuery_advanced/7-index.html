@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Task 0</title>
+
+    <!-- slim & minified version of jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  </head>
+
+  <body>
+    <script>
+      // Functions here below:
+      function createSearchForm() {
+        const inputElement = $("<input>", {
+          type: "text",
+          placeholder: "Search Wikipedia...",
+        });
+
+        const submitButton = $("<input>", {
+          type: "submit",
+          value: "Search",
+        });
+
+        const resultList = $("<ul>");
+
+        $("body").append(inputElement, submitButton, resultList);
+        submitButton.on("click", function (event) {
+          event.preventDefault();
+
+          const searchTerm = inputElement.val();
+
+          queryWikipedia(searchTerm);
+        });
+      }
+      // Query wiki with ajax, read API for wiki...
+      function queryWikipedia(search) {
+        const data = {
+          action: "query",
+          format: "json",
+          list: "search",
+          srsearch: search,
+          utf8: "",
+          origin: "*", //CORS
+        };
+
+        // AJAX GET request
+        $.ajax({
+          url: "https://en.wikipedia.org/w/api.php",
+          data: data,
+          dataType: "json",
+          success: function (response) {
+            if (response.query && response.query.search) {
+              response.query.search.forEach(function (result) {
+                addNewArticle(result.pageid, result.title, result.snippet);
+              });
+            } else {
+              console.log("No results found.");
+            }
+          },
+          error: function () {
+            console.error("Error fetching data from Wikipedia.");
+          },
+        });
+      }
+
+      function addNewArticle(id, title, snippet) {
+        const listItem = $("<li>");
+        const firstParagraph = $("<p>").append($("<span>").text(`${id} - `), $("<b>").text(title));
+        const secondParagraph = $("<p>").html(snippet); // change raw html from wiki to text
+
+        listItem.append(firstParagraph, secondParagraph);
+        $("ul").append(listItem);
+      }
+
+      // Main Calls here below:
+      $(document).ready(function () {
+        createSearchForm();
+      });
+    </script>
+  </body>
+</html>
